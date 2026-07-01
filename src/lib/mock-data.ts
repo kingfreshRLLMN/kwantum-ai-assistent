@@ -2,6 +2,13 @@ import type { AppUser, Document, InviteKey, Store } from "@/types";
 
 export const stores: Store[] = [
   {
+    id: "store-hq",
+    name: "Kwantum Hoofdkantoor",
+    storeNumber: "HQ",
+    region: "Landelijk",
+    createdAt: "2026-07-01T09:00:00.000Z",
+  },
+  {
     id: "store-rotterdam",
     name: "Kwantum Rotterdam Centrum",
     storeNumber: "010",
@@ -55,6 +62,15 @@ export const appUsers: AppUser[] = [
 ];
 
 export const inviteKeys: InviteKey[] = [
+  {
+    id: "invite-owner-kingfresh",
+    key: "KWA-OWNER-KINGFRESH",
+    role: "owner",
+    storeId: "store-hq",
+    createdBy: "system",
+    expiresAt: "2027-07-01T10:00:00.000Z",
+    createdAt: "2026-07-01T10:00:00.000Z",
+  },
   {
     id: "invite-1",
     key: "KWA-ROT-8F2K",

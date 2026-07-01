@@ -56,7 +56,7 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
     return null;
   }
 
-  const metadataRole = user.publicMetadata.role;
+  const metadataRole = user.publicMetadata.role || user.unsafeMetadata.role;
   const email = user.primaryEmailAddress?.emailAddress || "geen-email@kwantum.local";
   const role = isConfiguredOwner(email, user.username)
     ? "owner"
@@ -66,6 +66,8 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
   const storeId =
     typeof user.publicMetadata.storeId === "string"
       ? user.publicMetadata.storeId
+      : typeof user.unsafeMetadata.storeId === "string"
+        ? user.unsafeMetadata.storeId
       : undefined;
 
   return {

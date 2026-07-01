@@ -1,5 +1,6 @@
 "use client";
 
+import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 import { inviteKeys, stores } from "@/lib/mock-data";
@@ -26,6 +27,61 @@ export default function InviteCodeSignup() {
     setStatus("valid");
   }
 
+  if (status === "valid" && invite) {
+    return (
+      <section className="motion-soft motion-soft-delay-1 w-full rounded-2xl border border-white/80 bg-white/90 p-6 shadow-lg shadow-orange-200/30 backdrop-blur">
+        <div className="mb-4 rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900">
+          <p className="font-bold">Code goedgekeurd</p>
+          <p className="mt-1">
+            Rol: {invite.role} {store ? `- ${store.name}` : ""}
+          </p>
+        </div>
+
+        <SignUp
+          path="/sign-up"
+          routing="path"
+          signInUrl="/sign-in"
+          forceRedirectUrl="/chat"
+          unsafeMetadata={{
+            inviteKey: invite.key,
+            role: invite.role,
+            storeId: invite.storeId,
+          }}
+          appearance={{
+            elements: {
+              rootBox: "mx-auto w-full",
+              cardBox: "mx-auto w-full overflow-hidden rounded-2xl shadow-none",
+              card: "w-full px-0 py-0 shadow-none",
+              header: "hidden",
+              headerTitle: "hidden",
+              headerSubtitle: "hidden",
+              formButtonPrimary:
+                "h-12 rounded-xl bg-zinc-900 text-base font-bold hover:bg-orange-600",
+              formFieldInput:
+                "h-12 rounded-xl border-zinc-200 text-base focus:border-orange-500 focus:ring-orange-500",
+              formFieldLabel: "text-sm font-medium text-zinc-800",
+              footer: "hidden",
+              footerAction: "hidden",
+              footerPages: "hidden",
+              footerPageLink: "hidden",
+            },
+          }}
+        />
+
+        <button
+          type="button"
+          onClick={() => {
+            setStatus("idle");
+            setCode("");
+          }}
+          className="interactive-lift mt-4 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-center text-sm font-bold text-orange-700 hover:bg-orange-50"
+        >
+          Andere code gebruiken
+        </button>
+      </section>
+    );
+  }
+
   return (
     <section className="motion-soft motion-soft-delay-1 w-full rounded-2xl border border-white/80 bg-white/90 p-6 shadow-lg shadow-orange-200/30 backdrop-blur">
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -49,18 +105,6 @@ export default function InviteCodeSignup() {
           <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
             Deze code is niet geldig of is al gebruikt.
           </p>
-        ) : null}
-
-        {status === "valid" && invite ? (
-          <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900">
-            <p className="font-bold">Code goedgekeurd</p>
-            <p className="mt-1">
-              Rol: {invite.role} {store ? `- ${store.name}` : ""}
-            </p>
-            <p className="mt-2 text-orange-800">
-              Account aanmaken via Clerk wordt later aan deze code gekoppeld.
-            </p>
-          </div>
         ) : null}
 
         <button
