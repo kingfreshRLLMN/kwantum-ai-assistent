@@ -29,6 +29,13 @@ export const stores: Store[] = [
     region: "Brabant",
     createdAt: "2026-06-05T09:00:00.000Z",
   },
+  {
+    id: "store-oosterhout",
+    name: "Kwantum Oosterhout",
+    storeNumber: "0162",
+    region: "Brabant",
+    createdAt: "2026-07-01T09:00:00.000Z",
+  },
 ];
 
 export const appUsers: AppUser[] = [
