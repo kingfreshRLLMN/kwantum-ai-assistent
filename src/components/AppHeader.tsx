@@ -30,6 +30,12 @@ export default function AppHeader({ role, title = "Kwantum AI Assistent" }: AppH
             Dashboard
           </Link>
         ) : null}
+        <Link
+          href="/profile"
+          className="interactive-lift rounded-full border border-orange-200 bg-white px-4 py-2 text-sm font-bold text-orange-700 shadow-sm"
+        >
+          Profiel
+        </Link>
         <UserButton />
       </div>
     </header>

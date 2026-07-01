@@ -61,6 +61,12 @@ export default async function DashboardPage() {
           <p className="mt-2 text-sm leading-6 text-zinc-600">
             Kies een onderdeel om beheer voor jouw rol te openen.
           </p>
+          <Link
+            href="/profile"
+            className="interactive-lift mt-4 inline-flex rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm font-bold text-orange-700 hover:bg-orange-100"
+          >
+            Profiel bewerken
+          </Link>
         </section>
 
         <section className="grid gap-3 sm:grid-cols-2">
