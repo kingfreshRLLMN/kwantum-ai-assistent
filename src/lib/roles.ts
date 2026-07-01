@@ -15,6 +15,23 @@ const roleRank: Record<UserRole, number> = {
   owner: 4,
 };
 
+function parseEnvList(value?: string) {
+  return (value || "")
+    .split(",")
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function isConfiguredOwner(email?: string, username?: string | null) {
+  const ownerEmails = parseEnvList(process.env.OWNER_EMAILS);
+  const ownerUsernames = parseEnvList(process.env.OWNER_USERNAMES);
+
+  return (
+    (!!email && ownerEmails.includes(email.toLowerCase())) ||
+    (!!username && ownerUsernames.includes(username.toLowerCase()))
+  );
+}
+
 export function isUserRole(value: unknown): value is UserRole {
   return (
     value === "medewerker" ||
@@ -40,7 +57,12 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
   }
 
   const metadataRole = user.publicMetadata.role;
-  const role = isUserRole(metadataRole) ? metadataRole : "medewerker";
+  const email = user.primaryEmailAddress?.emailAddress || "geen-email@kwantum.local";
+  const role = isConfiguredOwner(email, user.username)
+    ? "owner"
+    : isUserRole(metadataRole)
+      ? metadataRole
+      : "medewerker";
   const storeId =
     typeof user.publicMetadata.storeId === "string"
       ? user.publicMetadata.storeId
@@ -52,9 +74,9 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
     name:
       user.fullName ||
       user.username ||
-      user.primaryEmailAddress?.emailAddress ||
+      email ||
       "Kwantum medewerker",
-    email: user.primaryEmailAddress?.emailAddress || "geen-email@kwantum.local",
+    email,
     role,
     storeId,
     createdAt: new Date(user.createdAt || Date.now()).toISOString(),
