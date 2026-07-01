@@ -47,7 +47,7 @@ export default async function DashboardPage() {
     <>
       <AppHeader role={user.role} title="Dashboard" />
       <main className="mx-auto min-h-dvh w-full max-w-5xl bg-zinc-50 px-4 pb-28 pt-5 md:pb-8">
-        <section className="mb-5 rounded-3xl bg-white p-5 shadow-sm">
+        <section className="motion-soft mb-5 rounded-3xl bg-white p-5 shadow-sm">
           <Image
             src="/brand/logo_kwantum.png"
             alt="Kwantum"
@@ -68,7 +68,7 @@ export default async function DashboardPage() {
             <Link
               key={card.href}
               href={card.href}
-              className="rounded-3xl border border-orange-100 bg-white p-5 shadow-sm transition hover:border-orange-300 hover:shadow-md"
+            className="interactive-lift motion-soft motion-soft-delay-1 rounded-3xl border border-orange-100 bg-white p-5 shadow-sm hover:border-orange-300 hover:shadow-md"
             >
               <h2 className="text-xl font-bold text-zinc-950">{card.title}</h2>
               <p className="mt-2 text-sm leading-6 text-zinc-600">{card.text}</p>

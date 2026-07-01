@@ -24,7 +24,7 @@ export default function MobileNav({ role }: MobileNavProps) {
           <Link
             key={item.href}
             href={item.href}
-            className="rounded-2xl px-3 py-3 text-center text-sm font-bold text-zinc-700 hover:bg-orange-50 hover:text-orange-700"
+            className="interactive-lift rounded-2xl px-3 py-3 text-center text-sm font-bold text-zinc-700 hover:bg-orange-50 hover:text-orange-700"
           >
             {item.label}
           </Link>

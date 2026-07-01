@@ -19,7 +19,7 @@ export default function SignInPage() {
         <span className="sprinkle sprinkle-12" />
       </div>
       <div className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center">
-        <div className="mb-6 flex w-full flex-col items-center text-center">
+        <div className="motion-soft mb-6 flex w-full flex-col items-center text-center">
           <BrandMark variant="auth" />
           <h1 className="mt-5 max-w-sm text-center text-3xl font-bold leading-tight text-zinc-950">
             Log hier in voor je vragen.

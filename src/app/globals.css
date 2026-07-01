@@ -36,6 +36,99 @@ select {
   -webkit-tap-highlight-color: transparent;
 }
 
+@keyframes kwantumFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kwantumSoftFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--sprinkle-rotate, 0deg));
+  }
+
+  50% {
+    transform: translate3d(var(--float-x, 0), var(--float-y, -10px), 0)
+      rotate(calc(var(--sprinkle-rotate, 0deg) + var(--float-rotate, 8deg)));
+  }
+}
+
+@keyframes kwantumPulseGlow {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.motion-soft {
+  animation: kwantumFadeUp 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.motion-soft-delay-1 {
+  animation-delay: 80ms;
+}
+
+.motion-soft-delay-2 {
+  animation-delay: 150ms;
+}
+
+.motion-soft-delay-3 {
+  animation-delay: 220ms;
+}
+
+.interactive-lift {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.interactive-lift:hover {
+  transform: translateY(-2px);
+}
+
+main article,
+main section {
+  animation: kwantumFadeUp 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+main article {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+main article:hover {
+  transform: translateY(-2px);
+}
+
+button {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
 .kwantum-auth-page {
   background:
     radial-gradient(circle at 18% 10%, rgba(255, 102, 0, 0.16), transparent 28%),
@@ -57,6 +150,7 @@ select {
   height: 170px;
   background: rgba(255, 102, 0, 0.12);
   filter: blur(6px);
+  animation: kwantumPulseGlow 7s ease-in-out infinite;
 }
 
 .kwantum-auth-page::after {
@@ -66,6 +160,7 @@ select {
   height: 210px;
   background: rgba(255, 102, 0, 0.1);
   filter: blur(8px);
+  animation: kwantumPulseGlow 8s ease-in-out infinite 800ms;
 }
 
 .kwantum-sprinkle-bg {
@@ -81,6 +176,10 @@ select {
   background: #ff6600;
   box-shadow: 0 10px 28px rgba(255, 102, 0, 0.18);
   opacity: 0.58;
+  animation: kwantumSoftFloat var(--float-duration, 7s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0ms);
+  transform: rotate(var(--sprinkle-rotate, 0deg));
+  will-change: transform;
 }
 
 .sprinkle:nth-child(3n) {
@@ -97,7 +196,10 @@ select {
   width: 54px;
   height: 9px;
   border-radius: 999px;
-  transform: rotate(-28deg);
+  --sprinkle-rotate: -28deg;
+  --float-x: 8px;
+  --float-y: -12px;
+  --float-duration: 7s;
 }
 
 .sprinkle-2 {
@@ -106,6 +208,10 @@ select {
   width: 13px;
   height: 13px;
   border-radius: 999px;
+  --float-x: -8px;
+  --float-y: 10px;
+  --float-duration: 6.5s;
+  --float-delay: 250ms;
 }
 
 .sprinkle-3 {
@@ -114,7 +220,11 @@ select {
   width: 11px;
   height: 42px;
   border-radius: 999px;
-  transform: rotate(18deg);
+  --sprinkle-rotate: 18deg;
+  --float-x: 9px;
+  --float-y: 8px;
+  --float-duration: 8s;
+  --float-delay: 120ms;
 }
 
 .sprinkle-4 {
@@ -123,7 +233,11 @@ select {
   width: 62px;
   height: 10px;
   border-radius: 999px;
-  transform: rotate(24deg);
+  --sprinkle-rotate: 24deg;
+  --float-x: -10px;
+  --float-y: -8px;
+  --float-duration: 7.5s;
+  --float-delay: 500ms;
 }
 
 .sprinkle-5 {
@@ -132,7 +246,10 @@ select {
   width: 44px;
   height: 8px;
   border-radius: 999px;
-  transform: rotate(36deg);
+  --sprinkle-rotate: 36deg;
+  --float-x: 10px;
+  --float-y: -10px;
+  --float-duration: 8.5s;
 }
 
 .sprinkle-6 {
@@ -141,6 +258,10 @@ select {
   width: 12px;
   height: 12px;
   border-radius: 999px;
+  --float-x: -9px;
+  --float-y: 9px;
+  --float-duration: 6s;
+  --float-delay: 300ms;
 }
 
 .sprinkle-7 {
@@ -149,7 +270,10 @@ select {
   width: 12px;
   height: 48px;
   border-radius: 999px;
-  transform: rotate(72deg);
+  --sprinkle-rotate: 72deg;
+  --float-x: -8px;
+  --float-y: -10px;
+  --float-duration: 9s;
 }
 
 .sprinkle-8 {
@@ -158,7 +282,11 @@ select {
   width: 48px;
   height: 8px;
   border-radius: 999px;
-  transform: rotate(-18deg);
+  --sprinkle-rotate: -18deg;
+  --float-x: 10px;
+  --float-y: 8px;
+  --float-duration: 7s;
+  --float-delay: 420ms;
 }
 
 .sprinkle-9 {
@@ -167,6 +295,9 @@ select {
   width: 10px;
   height: 10px;
   border-radius: 999px;
+  --float-x: 8px;
+  --float-y: -8px;
+  --float-duration: 5.5s;
 }
 
 .sprinkle-10 {
@@ -175,7 +306,10 @@ select {
   width: 38px;
   height: 7px;
   border-radius: 999px;
-  transform: rotate(-44deg);
+  --sprinkle-rotate: -44deg;
+  --float-x: -9px;
+  --float-y: -8px;
+  --float-duration: 7.8s;
 }
 
 .sprinkle-11 {
@@ -184,6 +318,10 @@ select {
   width: 10px;
   height: 10px;
   border-radius: 999px;
+  --float-x: 8px;
+  --float-y: 8px;
+  --float-duration: 6.8s;
+  --float-delay: 180ms;
 }
 
 .sprinkle-12 {
@@ -192,7 +330,11 @@ select {
   width: 11px;
   height: 52px;
   border-radius: 999px;
-  transform: rotate(-34deg);
+  --sprinkle-rotate: -34deg;
+  --float-x: -8px;
+  --float-y: 10px;
+  --float-duration: 8.2s;
+  --float-delay: 340ms;
 }
 
 .kwantum-auth-page .cl-header,
@@ -215,10 +357,34 @@ select {
   border-radius: 16px !important;
   background: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(12px) !important;
+  animation: kwantumFadeUp 560ms cubic-bezier(0.22, 1, 0.36, 1) 160ms both !important;
 }
 
 .kwantum-auth-page .cl-main,
 .kwantum-auth-page .cl-form,
 .kwantum-auth-page .cl-formButtonPrimary {
   width: 100% !important;
+}
+
+.kwantum-auth-page .cl-formButtonPrimary {
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease !important;
+}
+
+.kwantum-auth-page .cl-formButtonPrimary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 14px 30px rgba(255, 102, 0, 0.18) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }

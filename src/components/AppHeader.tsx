@@ -13,7 +13,7 @@ export default function AppHeader({ role, title = "Kwantum AI Assistent" }: AppH
   return (
     <header className="sticky top-0 z-30 border-b border-orange-100 bg-white/95 backdrop-blur">
       <div className="mx-auto flex min-h-16 w-full max-w-5xl items-center gap-3 px-4 py-3">
-        <Link href="/chat" className="min-w-0 flex-1">
+        <Link href="/chat" className="interactive-lift min-w-0 flex-1">
           <div className="flex items-center gap-3">
             <BrandMark variant="compact" />
             <div className="min-w-0">
@@ -25,7 +25,7 @@ export default function AppHeader({ role, title = "Kwantum AI Assistent" }: AppH
         {canSeeDashboard(role) ? (
           <Link
             href="/dashboard"
-            className="rounded-full bg-orange-500 px-4 py-2 text-sm font-bold text-white shadow-sm shadow-orange-200"
+            className="interactive-lift rounded-full bg-orange-500 px-4 py-2 text-sm font-bold text-white shadow-sm shadow-orange-200"
           >
             Dashboard
           </Link>

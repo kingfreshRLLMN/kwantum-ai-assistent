@@ -56,7 +56,7 @@ export default function ChatInterface() {
   return (
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col bg-zinc-50">
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 px-4 pb-32 pt-4">
-        <section className="rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
+        <section className="motion-soft rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
           <Image
             src="/brand/payoff.png"
             alt="Kwantum - Hoe leuk is dat?"
@@ -72,7 +72,7 @@ export default function ChatInterface() {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`max-w-[88%] rounded-3xl px-4 py-3 text-sm leading-6 shadow-sm ${
+            className={`motion-soft max-w-[88%] rounded-3xl px-4 py-3 text-sm leading-6 shadow-sm ${
               message.role === "user"
                 ? "ml-auto bg-orange-500 text-white"
                 : "mr-auto border border-orange-100 bg-white text-zinc-800"
@@ -82,7 +82,7 @@ export default function ChatInterface() {
           </div>
         ))}
         {isLoading ? (
-          <div className="mr-auto rounded-3xl border border-orange-100 bg-white px-4 py-3 text-sm font-medium text-zinc-500 shadow-sm">
+          <div className="motion-soft mr-auto rounded-3xl border border-orange-100 bg-white px-4 py-3 text-sm font-medium text-zinc-500 shadow-sm">
             Antwoord voorbereiden...
           </div>
         ) : null}
@@ -90,7 +90,7 @@ export default function ChatInterface() {
 
       <form
         onSubmit={handleSubmit}
-        className="fixed inset-x-0 bottom-0 z-20 border-t border-orange-100 bg-white p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
+        className="motion-soft motion-soft-delay-2 fixed inset-x-0 bottom-0 z-20 border-t border-orange-100 bg-white p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
       >
         <div className="mx-auto flex max-w-3xl items-end gap-2">
           <label className="sr-only" htmlFor="question">
@@ -107,7 +107,7 @@ export default function ChatInterface() {
           <button
             type="submit"
             disabled={isLoading || !question.trim()}
-            className="h-12 rounded-2xl bg-orange-500 px-5 text-base font-bold text-white shadow-sm shadow-orange-200 disabled:cursor-not-allowed disabled:bg-zinc-300"
+            className="interactive-lift h-12 rounded-2xl bg-orange-500 px-5 text-base font-bold text-white shadow-sm shadow-orange-200 disabled:cursor-not-allowed disabled:bg-zinc-300"
           >
             Stuur
           </button>
