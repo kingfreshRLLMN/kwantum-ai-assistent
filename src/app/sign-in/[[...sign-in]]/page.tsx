@@ -1,23 +1,12 @@
 import { SignIn } from "@clerk/nextjs";
+import Link from "next/link";
 import BrandMark from "@/components/BrandMark";
+import SprinkleBackground from "@/components/SprinkleBackground";
 
 export default function SignInPage() {
   return (
     <main className="kwantum-auth-page relative flex min-h-dvh items-center justify-center overflow-hidden bg-zinc-50 px-4 py-8">
-      <div aria-hidden="true" className="kwantum-sprinkle-bg">
-        <span className="sprinkle sprinkle-1" />
-        <span className="sprinkle sprinkle-2" />
-        <span className="sprinkle sprinkle-3" />
-        <span className="sprinkle sprinkle-4" />
-        <span className="sprinkle sprinkle-5" />
-        <span className="sprinkle sprinkle-6" />
-        <span className="sprinkle sprinkle-7" />
-        <span className="sprinkle sprinkle-8" />
-        <span className="sprinkle sprinkle-9" />
-        <span className="sprinkle sprinkle-10" />
-        <span className="sprinkle sprinkle-11" />
-        <span className="sprinkle sprinkle-12" />
-      </div>
+      <SprinkleBackground />
       <div className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center">
         <div className="motion-soft mb-6 flex w-full flex-col items-center text-center">
           <BrandMark variant="auth" />
@@ -49,6 +38,12 @@ export default function SignInPage() {
             },
           }}
         />
+        <Link
+          href="/sign-up"
+          className="interactive-lift motion-soft motion-soft-delay-2 mt-4 block w-full rounded-2xl border border-orange-100 bg-white/90 px-4 py-3 text-center text-sm font-bold text-orange-700 shadow-sm backdrop-blur hover:bg-orange-50"
+        >
+          Aanmelden met code
+        </Link>
       </div>
     </main>
   );

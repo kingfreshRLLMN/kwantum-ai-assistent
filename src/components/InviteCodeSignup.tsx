@@ -1,0 +1,82 @@
+"use client";
+
+import Link from "next/link";
+import { FormEvent, useMemo, useState } from "react";
+import { inviteKeys, stores } from "@/lib/mock-data";
+
+export default function InviteCodeSignup() {
+  const [code, setCode] = useState("");
+  const [status, setStatus] = useState<"idle" | "valid" | "invalid">("idle");
+
+  const normalizedCode = code.trim().toUpperCase();
+  const invite = useMemo(
+    () => inviteKeys.find((item) => item.key.toUpperCase() === normalizedCode),
+    [normalizedCode],
+  );
+  const store = invite ? stores.find((item) => item.id === invite.storeId) : null;
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!normalizedCode || !invite || invite.usedAt) {
+      setStatus("invalid");
+      return;
+    }
+
+    setStatus("valid");
+  }
+
+  return (
+    <section className="motion-soft motion-soft-delay-1 w-full rounded-2xl border border-white/80 bg-white/90 p-6 shadow-lg shadow-orange-200/30 backdrop-blur">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="invite-code" className="text-sm font-semibold text-zinc-900">
+            Aanmeldcode
+          </label>
+          <input
+            id="invite-code"
+            value={code}
+            onChange={(event) => {
+              setCode(event.target.value);
+              setStatus("idle");
+            }}
+            placeholder="Bijv. KWA-ROT-8F2K"
+            className="mt-2 h-12 w-full rounded-xl border border-zinc-200 bg-white px-4 text-base font-semibold uppercase tracking-wide text-zinc-950 outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+          />
+        </div>
+
+        {status === "invalid" ? (
+          <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+            Deze code is niet geldig of is al gebruikt.
+          </p>
+        ) : null}
+
+        {status === "valid" && invite ? (
+          <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900">
+            <p className="font-bold">Code goedgekeurd</p>
+            <p className="mt-1">
+              Rol: {invite.role} {store ? `- ${store.name}` : ""}
+            </p>
+            <p className="mt-2 text-orange-800">
+              Account aanmaken via Clerk wordt later aan deze code gekoppeld.
+            </p>
+          </div>
+        ) : null}
+
+        <button
+          type="submit"
+          className="interactive-lift h-12 w-full rounded-xl bg-zinc-900 px-5 text-base font-bold text-white shadow-sm hover:bg-orange-600"
+        >
+          Aanmelden
+        </button>
+      </form>
+
+      <Link
+        href="/sign-in"
+        className="interactive-lift mt-4 block rounded-xl border border-orange-100 bg-white px-4 py-3 text-center text-sm font-bold text-orange-700 hover:bg-orange-50"
+      >
+        Ik heb al een account
+      </Link>
+    </section>
+  );
+}
