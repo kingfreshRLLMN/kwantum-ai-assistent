@@ -15,6 +15,7 @@ export interface Store {
   name: string;
   storeNumber: string;
   region: string;
+  invitePrefix?: string;
   createdAt: string;
 }
 

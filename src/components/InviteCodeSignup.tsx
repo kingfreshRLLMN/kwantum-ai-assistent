@@ -3,17 +3,15 @@
 import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
-import { inviteKeys, stores } from "@/lib/mock-data";
+import { stores } from "@/lib/mock-data";
+import { resolveInviteCode } from "@/lib/invite-codes";
 
 export default function InviteCodeSignup() {
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<"idle" | "valid" | "invalid">("idle");
 
   const normalizedCode = code.replace(/\D/g, "").slice(0, 6);
-  const invite = useMemo(
-    () => inviteKeys.find((item) => item.key.toUpperCase() === normalizedCode),
-    [normalizedCode],
-  );
+  const invite = useMemo(() => resolveInviteCode(normalizedCode), [normalizedCode]);
   const store = invite ? stores.find((item) => item.id === invite.storeId) : null;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

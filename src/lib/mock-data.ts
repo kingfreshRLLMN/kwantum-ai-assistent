@@ -6,6 +6,7 @@ export const stores: Store[] = [
     name: "Kwantum Hoofdkantoor",
     storeNumber: "HQ",
     region: "Landelijk",
+    invitePrefix: "90",
     createdAt: "2026-07-01T09:00:00.000Z",
   },
   {
@@ -13,6 +14,7 @@ export const stores: Store[] = [
     name: "Kwantum Rotterdam Centrum",
     storeNumber: "010",
     region: "Zuid-Holland",
+    invitePrefix: "10",
     createdAt: "2026-06-01T09:00:00.000Z",
   },
   {
@@ -20,6 +22,7 @@ export const stores: Store[] = [
     name: "Kwantum Utrecht Woonboulevard",
     storeNumber: "030",
     region: "Midden-Nederland",
+    invitePrefix: "30",
     createdAt: "2026-06-03T09:00:00.000Z",
   },
   {
@@ -27,6 +30,7 @@ export const stores: Store[] = [
     name: "Kwantum Eindhoven Noord",
     storeNumber: "040",
     region: "Brabant",
+    invitePrefix: "40",
     createdAt: "2026-06-05T09:00:00.000Z",
   },
   {
@@ -34,6 +38,7 @@ export const stores: Store[] = [
     name: "Kwantum Oosterhout",
     storeNumber: "0162",
     region: "Brabant",
+    invitePrefix: "62",
     createdAt: "2026-07-01T09:00:00.000Z",
   },
 ];
@@ -77,26 +82,6 @@ export const inviteKeys: InviteKey[] = [
     createdBy: "system",
     expiresAt: "2027-07-01T10:00:00.000Z",
     createdAt: "2026-07-01T10:00:00.000Z",
-  },
-  {
-    id: "invite-1",
-    key: "104082",
-    role: "medewerker",
-    storeId: "store-rotterdam",
-    createdBy: "user-1",
-    expiresAt: "2026-08-01T10:00:00.000Z",
-    createdAt: "2026-07-01T10:00:00.000Z",
-  },
-  {
-    id: "invite-2",
-    key: "303949",
-    role: "medewerker",
-    storeId: "store-utrecht",
-    createdBy: "user-3",
-    expiresAt: "2026-08-01T10:00:00.000Z",
-    usedBy: "user-2",
-    usedAt: "2026-07-01T12:00:00.000Z",
-    createdAt: "2026-06-29T10:00:00.000Z",
   },
 ];
 
