@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import MobileNav from "@/components/MobileNav";
+import OwnerProfileControls from "@/components/OwnerProfileControls";
 import ProfileNameForm from "@/components/ProfileNameForm";
 import { stores } from "@/lib/mock-data";
 import { getCurrentAppUser, roleLabels } from "@/lib/roles";
@@ -75,6 +76,16 @@ export default async function ProfilePage() {
             </Link>
           </section>
         </div>
+
+        {appUser.role === "owner" ? (
+          <div className="mt-4">
+            <OwnerProfileControls
+              currentRole={appUser.role}
+              currentStoreId={appUser.storeId}
+              stores={stores}
+            />
+          </div>
+        ) : null}
       </main>
       <MobileNav role={appUser.role} />
     </>
