@@ -2,7 +2,6 @@ import AppHeader from "@/components/AppHeader";
 import MobileNav from "@/components/MobileNav";
 import RoleGate from "@/components/RoleGate";
 import { getCurrentAppUser } from "@/lib/roles";
-import { appUsers, stores } from "@/lib/mock-data";
 
 export default async function UsersPage() {
   const user = await getCurrentAppUser();
@@ -20,32 +19,12 @@ export default async function UsersPage() {
               </p>
             </section>
 
-            <section className="grid gap-3">
-              {appUsers.map((member) => {
-                const store = stores.find((item) => item.id === member.storeId);
-                return (
-                  <article key={member.id} className="rounded-3xl bg-white p-5 shadow-sm">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h2 className="text-lg font-bold text-zinc-950">{member.name}</h2>
-                        <p className="text-sm text-zinc-600">{member.email}</p>
-                      </div>
-                      <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700">
-                        {member.role}
-                      </span>
-                    </div>
-                    <p className="mt-3 text-sm text-zinc-600">{store?.name || "Geen filiaal"}</p>
-                    <div className="mt-4 grid grid-cols-2 gap-2">
-                      <button className="rounded-2xl border border-orange-200 px-3 py-3 text-sm font-bold text-orange-700">
-                        Rol aanpassen
-                      </button>
-                      <button className="rounded-2xl border border-zinc-200 px-3 py-3 text-sm font-bold text-zinc-700">
-                        Filiaal koppelen
-                      </button>
-                    </div>
-                  </article>
-                );
-              })}
+            <section className="rounded-3xl border border-dashed border-orange-200 bg-white p-6 text-center shadow-sm">
+              <h2 className="text-xl font-bold text-zinc-950">Nog geen gebruikers gekoppeld</h2>
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-zinc-600">
+                Zodra echte medewerkers via Clerk en de database worden gekoppeld, verschijnen ze
+                hier. Voor nu zijn de voorbeeldgebruikers weggehaald.
+              </p>
             </section>
           </main>
           <MobileNav role={user.role} />
