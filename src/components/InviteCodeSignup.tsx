@@ -9,7 +9,7 @@ export default function InviteCodeSignup() {
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<"idle" | "valid" | "invalid">("idle");
 
-  const normalizedCode = code.trim().toUpperCase();
+  const normalizedCode = code.replace(/\D/g, "").slice(0, 6);
   const invite = useMemo(
     () => inviteKeys.find((item) => item.key.toUpperCase() === normalizedCode),
     [normalizedCode],
@@ -93,11 +93,14 @@ export default function InviteCodeSignup() {
             id="invite-code"
             value={code}
             onChange={(event) => {
-              setCode(event.target.value);
+              setCode(event.target.value.replace(/\D/g, "").slice(0, 6));
               setStatus("idle");
             }}
-            placeholder="Bijv. KWA-ROT-8F2K"
-            className="mt-2 h-12 w-full rounded-xl border border-zinc-200 bg-white px-4 text-base font-semibold uppercase tracking-wide text-zinc-950 outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+            inputMode="numeric"
+            maxLength={6}
+            pattern="[0-9]*"
+            placeholder="Bijv. 104082"
+            className="mt-2 h-12 w-full rounded-xl border border-zinc-200 bg-white px-4 text-center text-xl font-bold tracking-[0.28em] text-zinc-950 outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
           />
         </div>
 

@@ -64,7 +64,7 @@ export const appUsers: AppUser[] = [
 export const inviteKeys: InviteKey[] = [
   {
     id: "invite-owner-kingfresh",
-    key: "KWA-OWNER-KINGFRESH",
+    key: "951995",
     role: "owner",
     storeId: "store-hq",
     createdBy: "system",
@@ -73,7 +73,7 @@ export const inviteKeys: InviteKey[] = [
   },
   {
     id: "invite-1",
-    key: "KWA-ROT-8F2K",
+    key: "104082",
     role: "medewerker",
     storeId: "store-rotterdam",
     createdBy: "user-1",
@@ -82,7 +82,7 @@ export const inviteKeys: InviteKey[] = [
   },
   {
     id: "invite-2",
-    key: "KWA-UTR-3P9Q",
+    key: "303949",
     role: "medewerker",
     storeId: "store-utrecht",
     createdBy: "user-3",
