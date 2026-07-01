@@ -58,7 +58,7 @@ export default function ChatInterface() {
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 px-4 pb-32 pt-4">
         <section className="rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
           <Image
-            src="/brand/kwantum-payoff.png"
+            src="/brand/payoff.png"
             alt="Kwantum - Hoe leuk is dat?"
             width={600}
             height={50}

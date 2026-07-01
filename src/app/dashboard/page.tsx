@@ -49,7 +49,7 @@ export default async function DashboardPage() {
       <main className="mx-auto min-h-dvh w-full max-w-5xl bg-zinc-50 px-4 pb-28 pt-5 md:pb-8">
         <section className="mb-5 rounded-3xl bg-white p-5 shadow-sm">
           <Image
-            src="/brand/kwantum-wordmark.png"
+            src="/brand/logo_kwantum.png"
             alt="Kwantum"
             width={260}
             height={120}

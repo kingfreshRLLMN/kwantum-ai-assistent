@@ -8,7 +8,7 @@ export default function BrandMark({ variant = "header" }: BrandMarkProps) {
   if (variant === "compact") {
     return (
       <Image
-        src="/brand/kwantum-logo-square.jpg"
+        src="/brand/kwantum_logo.jpg"
         alt="Kwantum"
         width={40}
         height={40}
@@ -22,7 +22,7 @@ export default function BrandMark({ variant = "header" }: BrandMarkProps) {
     return (
       <div className="flex flex-col items-center gap-3">
         <Image
-        src="/brand/kwantum-logo-square.jpg"
+          src="/brand/kwantum_logo.jpg"
         alt="Kwantum"
         width={72}
         height={72}
@@ -30,7 +30,7 @@ export default function BrandMark({ variant = "header" }: BrandMarkProps) {
           priority
         />
         <Image
-          src="/brand/kwantum-payoff.png"
+          src="/brand/payoff.png"
           alt="Kwantum - Hoe leuk is dat?"
           width={600}
           height={50}
@@ -44,7 +44,7 @@ export default function BrandMark({ variant = "header" }: BrandMarkProps) {
   return (
     <div className="flex items-center gap-3">
       <Image
-        src="/brand/kwantum-logo-square.jpg"
+        src="/brand/kwantum_logo.jpg"
         alt="Kwantum"
         width={40}
         height={40}
@@ -52,7 +52,7 @@ export default function BrandMark({ variant = "header" }: BrandMarkProps) {
         priority
       />
       <Image
-        src="/brand/kwantum-wordmark.png"
+        src="/brand/logo_kwantum.png"
         alt="Kwantum"
         width={260}
         height={120}
