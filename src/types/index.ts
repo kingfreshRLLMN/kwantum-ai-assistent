@@ -6,6 +6,8 @@ export interface AppUser {
   name: string;
   email: string;
   role: UserRole;
+  actualRole: UserRole;
+  previewRole?: UserRole;
   storeId?: string;
   createdAt: string;
 }

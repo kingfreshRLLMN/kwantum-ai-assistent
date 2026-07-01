@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
 import type { AppUser, UserRole } from "@/types";
 
 export const roleLabels: Record<UserRole, string> = {
@@ -15,6 +16,9 @@ const roleRank: Record<UserRole, number> = {
   owner: 4,
 };
 
+const fallbackOwnerEmails = ["kennethblanken95@gmail.com"];
+const fallbackOwnerUsernames = ["kingfresh"];
+
 function parseEnvList(value?: string) {
   return (value || "")
     .split(",")
@@ -22,9 +26,9 @@ function parseEnvList(value?: string) {
     .filter(Boolean);
 }
 
-function isConfiguredOwner(email?: string, username?: string | null) {
-  const ownerEmails = parseEnvList(process.env.OWNER_EMAILS);
-  const ownerUsernames = parseEnvList(process.env.OWNER_USERNAMES);
+export function isConfiguredOwner(email?: string, username?: string | null) {
+  const ownerEmails = [...fallbackOwnerEmails, ...parseEnvList(process.env.OWNER_EMAILS)];
+  const ownerUsernames = [...fallbackOwnerUsernames, ...parseEnvList(process.env.OWNER_USERNAMES)];
 
   return (
     (!!email && ownerEmails.includes(email.toLowerCase())) ||
@@ -58,11 +62,16 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
 
   const metadataRole = user.publicMetadata.role || user.unsafeMetadata.role;
   const email = user.primaryEmailAddress?.emailAddress || "geen-email@kwantum.local";
-  const role = isConfiguredOwner(email, user.username)
+  const actualRole = isConfiguredOwner(email, user.username)
     ? "owner"
     : isUserRole(metadataRole)
       ? metadataRole
       : "medewerker";
+  const cookieStore = await cookies();
+  const previewRoleValue = cookieStore.get("kwantum_preview_role")?.value;
+  const previewRole =
+    actualRole === "owner" && isUserRole(previewRoleValue) ? previewRoleValue : undefined;
+  const role = previewRole || actualRole;
   const storeId =
     typeof user.publicMetadata.storeId === "string"
       ? user.publicMetadata.storeId
@@ -80,6 +89,8 @@ export async function getCurrentAppUser(): Promise<AppUser | null> {
       "Kwantum medewerker",
     email,
     role,
+    actualRole,
+    previewRole,
     storeId,
     createdAt: new Date(user.createdAt || Date.now()).toISOString(),
   };

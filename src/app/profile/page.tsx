@@ -3,8 +3,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import MobileNav from "@/components/MobileNav";
-import OwnerProfileControls from "@/components/OwnerProfileControls";
 import ProfileNameForm from "@/components/ProfileNameForm";
+import RolePreviewControls from "@/components/RolePreviewControls";
 import { stores } from "@/lib/mock-data";
 import { getCurrentAppUser, roleLabels } from "@/lib/roles";
 
@@ -46,8 +46,15 @@ export default async function ProfilePage() {
 
             <div className="mt-4 grid gap-3">
               <div className="rounded-2xl bg-orange-50 p-4">
-                <p className="text-xs font-bold uppercase text-orange-700">Rol</p>
+                <p className="text-xs font-bold uppercase text-orange-700">
+                  {appUser.previewRole ? "Preview rol" : "Rol"}
+                </p>
                 <p className="mt-1 text-base font-bold text-zinc-950">{roleLabels[appUser.role]}</p>
+                {appUser.previewRole ? (
+                  <p className="mt-1 text-sm text-orange-700">
+                    Echte rol: {roleLabels[appUser.actualRole]}
+                  </p>
+                ) : null}
               </div>
               <div className="rounded-2xl bg-zinc-50 p-4">
                 <p className="text-xs font-bold uppercase text-zinc-500">Filiaal / team</p>
@@ -77,13 +84,9 @@ export default async function ProfilePage() {
           </section>
         </div>
 
-        {appUser.role === "owner" ? (
+        {appUser.actualRole === "owner" ? (
           <div className="mt-4">
-            <OwnerProfileControls
-              currentRole={appUser.role}
-              currentStoreId={appUser.storeId}
-              stores={stores}
-            />
+            <RolePreviewControls currentRole={appUser.role} previewRole={appUser.previewRole} />
           </div>
         ) : null}
       </main>

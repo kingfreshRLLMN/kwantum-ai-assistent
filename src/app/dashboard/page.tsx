@@ -12,7 +12,7 @@ export default async function DashboardPage() {
     redirect("/sign-in");
   }
 
-  if (!canAccess(user.role, "floormanager")) {
+  if (!canAccess(user.actualRole, "floormanager")) {
     redirect("/chat");
   }
 
@@ -74,7 +74,7 @@ export default async function DashboardPage() {
             <Link
               key={card.href}
               href={card.href}
-            className="interactive-lift motion-soft motion-soft-delay-1 rounded-3xl border border-orange-100 bg-white p-5 shadow-sm hover:border-orange-300 hover:shadow-md"
+              className="interactive-lift motion-soft motion-soft-delay-1 rounded-3xl border border-orange-100 bg-white p-5 shadow-sm hover:border-orange-300 hover:shadow-md"
             >
               <h2 className="text-xl font-bold text-zinc-950">{card.title}</h2>
               <p className="mt-2 text-sm leading-6 text-zinc-600">{card.text}</p>

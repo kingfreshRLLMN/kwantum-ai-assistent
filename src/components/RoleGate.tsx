@@ -14,7 +14,7 @@ export default async function RoleGate({ minimumRole, children }: RoleGateProps)
     redirect("/sign-in");
   }
 
-  if (!canAccess(user.role, minimumRole)) {
+  if (!canAccess(user.actualRole, minimumRole)) {
     redirect("/chat");
   }
 
