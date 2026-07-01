@@ -53,8 +53,12 @@ export default function InviteCodeSignup() {
               cardBox: "mx-auto w-full overflow-hidden rounded-2xl shadow-none",
               card: "w-full px-0 py-0 shadow-none",
               header: "hidden",
+              header__emailCode: "block text-center",
               headerTitle: "hidden",
+              headerTitle__emailCode: "block text-xl font-bold text-zinc-950",
               headerSubtitle: "hidden",
+              headerSubtitle__emailCode:
+                "block px-3 text-center text-sm font-medium leading-6 text-orange-800",
               formButtonPrimary:
                 "h-12 rounded-xl bg-zinc-900 text-base font-bold hover:bg-orange-600",
               formFieldInput:

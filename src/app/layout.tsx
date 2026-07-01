@@ -30,7 +30,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      localization={{
+        formButtonPrimary: "Verder",
+        formButtonPrimary__verify: "Controleren",
+        signUp: {
+          emailCode: {
+            title: "Controleer je e-mail",
+            subtitle: "Er is een code gestuurd naar {{identifier}}.",
+            formTitle: "",
+            formSubtitle: "",
+            resendButton: "Geen code ontvangen? Opnieuw sturen",
+          },
+        },
+      }}
+    >
       <html lang="nl" className={`${geistSans.variable} ${geistMono.variable}`}>
         <body>{children}</body>
       </html>
