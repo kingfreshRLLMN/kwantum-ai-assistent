@@ -35,3 +35,29 @@ textarea,
 select {
   -webkit-tap-highlight-color: transparent;
 }
+
+.kwantum-auth-page .cl-header,
+.kwantum-auth-page .cl-footer {
+  display: none !important;
+}
+
+.kwantum-auth-page .cl-rootBox,
+.kwantum-auth-page .cl-cardBox,
+.kwantum-auth-page .cl-card {
+  width: 100% !important;
+}
+
+.kwantum-auth-page .cl-cardBox {
+  max-width: 400px !important;
+  margin-inline: auto !important;
+}
+
+.kwantum-auth-page .cl-card {
+  border-radius: 16px !important;
+}
+
+.kwantum-auth-page .cl-main,
+.kwantum-auth-page .cl-form,
+.kwantum-auth-page .cl-formButtonPrimary {
+  width: 100% !important;
+}
