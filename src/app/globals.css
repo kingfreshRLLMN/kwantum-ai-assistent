@@ -342,6 +342,19 @@ button:not(:disabled):hover {
   display: none !important;
 }
 
+.kwantum-auth-page .cl-formFieldRow__phoneNumber,
+.kwantum-auth-page .cl-formField__phoneNumber,
+.kwantum-auth-page [class*="phoneNumber"],
+.kwantum-auth-page [name="phoneNumber"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
 .kwantum-auth-page .cl-rootBox,
 .kwantum-auth-page .cl-cardBox,
 .kwantum-auth-page .cl-card {

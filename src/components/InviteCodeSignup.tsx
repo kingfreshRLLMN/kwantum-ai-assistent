@@ -60,6 +60,8 @@ export default function InviteCodeSignup() {
               formFieldInput:
                 "h-12 rounded-xl border-zinc-200 text-base focus:border-orange-500 focus:ring-orange-500",
               formFieldLabel: "text-sm font-medium text-zinc-800",
+              formFieldRow__phoneNumber: "hidden",
+              formField__phoneNumber: "hidden",
               footer: "hidden",
               footerAction: "hidden",
               footerPages: "hidden",
