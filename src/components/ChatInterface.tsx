@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
 import { answerQuestion } from "@/lib/ai";
 
 type Message = {
@@ -55,6 +56,19 @@ export default function ChatInterface() {
   return (
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col bg-zinc-50">
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 px-4 pb-32 pt-4">
+        <section className="rounded-3xl border border-orange-100 bg-white p-4 shadow-sm">
+          <Image
+            src="/brand/kwantum-payoff.png"
+            alt="Kwantum - Hoe leuk is dat?"
+            width={600}
+            height={50}
+            className="h-auto w-full max-w-sm"
+            priority
+          />
+          <p className="mt-3 text-sm leading-6 text-zinc-600">
+            Stel je vraag aan de Kwantum AI Assistent. De AI-koppeling wordt later gevuld met documenten en interne kennis.
+          </p>
+        </section>
         {messages.map((message) => (
           <div
             key={message.id}

@@ -1,11 +1,13 @@
 import { SignUp } from "@clerk/nextjs";
+import BrandMark from "@/components/BrandMark";
 
 export default function SignUpPage() {
   return (
     <main className="flex min-h-dvh items-center justify-center bg-zinc-50 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <p className="text-sm font-bold uppercase tracking-wide text-orange-600">
+          <BrandMark variant="auth" />
+          <p className="mt-4 text-sm font-bold uppercase tracking-wide text-orange-600">
             Invite key later
           </p>
           <h1 className="mt-2 text-3xl font-bold text-zinc-950">
