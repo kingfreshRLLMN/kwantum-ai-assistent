@@ -40,17 +40,30 @@ export default function ChatInterface() {
     setQuestion("");
     setIsLoading(true);
 
-    const response = await answerQuestion(trimmedQuestion);
+    try {
+      const response = await answerQuestion(trimmedQuestion, messages);
 
-    setMessages((current) => [
-      ...current,
-      {
-        id: `assistant-${Date.now()}`,
-        role: "assistant",
-        content: response.answer,
-      },
-    ]);
-    setIsLoading(false);
+      setMessages((current) => [
+        ...current,
+        {
+          id: `assistant-${Date.now()}`,
+          role: "assistant",
+          content: response.answer,
+        },
+      ]);
+    } catch {
+      setMessages((current) => [
+        ...current,
+        {
+          id: `assistant-error-${Date.now()}`,
+          role: "assistant",
+          content:
+            "Er ging iets mis met de AI-koppeling. Probeer het zo opnieuw of controleer de API instellingen.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -66,7 +79,8 @@ export default function ChatInterface() {
             priority
           />
           <p className="mt-3 text-sm leading-6 text-zinc-600">
-            Stel je vraag aan de Kwantum AI Assistent. De AI-koppeling wordt later gevuld met documenten en interne kennis.
+            Stel je vraag aan de Kwantum AI Assistent. Antwoorden worden gemaakt op basis van
+            gekoppelde Kwantum-kennis en documenten.
           </p>
         </section>
         {messages.map((message) => (
