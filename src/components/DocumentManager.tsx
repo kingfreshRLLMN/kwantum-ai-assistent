@@ -7,7 +7,16 @@ import type { Document } from "@/types";
 const STORAGE_KEY = "kwantum-ai-documents-v1";
 
 type StoredDocument = Document & {
-  kind: "mock" | "photo";
+  kind: "mock" | "photo" | "pdf";
+};
+
+type UploadResponse = {
+  document?: {
+    id: string;
+    name: string;
+    createdAt: string;
+  };
+  error?: string;
 };
 
 type DocumentManagerProps = {
@@ -57,6 +66,7 @@ export default function DocumentManager({
   );
   const documents = [...storedDocuments, ...mockDocuments];
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [statusText, setStatusText] = useState("");
 
   async function handleFiles(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files || []);
@@ -65,10 +75,36 @@ export default function DocumentManager({
     }
 
     setStatus("saving");
+    setStatusText("Upload verwerken...");
 
     try {
       const newDocuments = await Promise.all(
         files.map(async (file) => {
+          if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
+            const uploadFormData = new FormData();
+            uploadFormData.append("file", file);
+
+            const response = await fetch("/api/documents/upload", {
+              method: "POST",
+              body: uploadFormData,
+            });
+            const result = (await response.json()) as UploadResponse;
+
+            if (!response.ok || !result.document) {
+              throw new Error(result.error || "PDF uploaden is niet gelukt.");
+            }
+
+            return {
+              id: result.document.id,
+              name: result.document.name,
+              url: "#",
+              uploadedBy: uploaderName,
+              active: true,
+              createdAt: result.document.createdAt,
+              kind: "pdf" as const,
+            };
+          }
+
           const url = await readFileAsDataUrl(file);
           return {
             id: `photo-${Date.now()}-${crypto.randomUUID()}`,
@@ -87,17 +123,40 @@ export default function DocumentManager({
       saveStoredDocuments(nextStored);
       setStoredDocuments(nextStored);
       setStatus("saved");
-    } catch {
+      setStatusText(
+        newDocuments.some((document) => document.kind === "pdf")
+          ? "PDF opgeslagen in de AI-kennis en beschikbaar voor de chat."
+          : "Upload opgeslagen en lokaal onthouden.",
+      );
+    } catch (error) {
+      setStatusText(error instanceof Error ? error.message : "Upload opslaan is niet gelukt.");
       setStatus("error");
     } finally {
       event.target.value = "";
     }
   }
 
-  function deleteDocument(documentId: string) {
-    const stored = loadStoredDocuments().filter((document) => document.id !== documentId);
+  async function deleteDocument(document: StoredDocument) {
+    setStatus("saving");
+    setStatusText("Document verwijderen...");
+
+    if (document.kind === "pdf") {
+      await fetch("/api/documents/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileId: document.id }),
+      });
+    }
+
+    const stored = loadStoredDocuments().filter((item) => item.id !== document.id);
     saveStoredDocuments(stored);
     setStoredDocuments(stored);
+    setStatus("saved");
+    setStatusText(
+      document.kind === "pdf"
+        ? "PDF verwijderd uit de AI-kennis."
+        : "Document verwijderd uit dit overzicht.",
+    );
   }
 
   return (
@@ -105,8 +164,8 @@ export default function DocumentManager({
       <section className="mb-4 rounded-3xl bg-white p-5 shadow-sm">
         <h1 className="text-2xl font-bold text-zinc-950">Documentbeheer</h1>
         <p className="mt-2 text-sm leading-6 text-zinc-600">
-          Maak foto&apos;s van goede informatie of upload bestanden. Foto&apos;s worden nu lokaal
-          onthouden; later koppelen we dit aan Vercel Blob en AI-verwerking.
+          Upload PDF&apos;s met Kwantum-informatie zodat de AI die kennis kan gebruiken voor
+          iedereen. Foto&apos;s worden nu nog lokaal onthouden.
         </p>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -145,17 +204,17 @@ export default function DocumentManager({
 
         {status === "saving" ? (
           <p className="mt-4 rounded-2xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-700">
-            Upload opslaan...
+            {statusText || "Upload opslaan..."}
           </p>
         ) : null}
         {status === "saved" ? (
           <p className="mt-4 rounded-2xl bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
-            Upload opgeslagen en lokaal onthouden.
+            {statusText || "Upload opgeslagen."}
           </p>
         ) : null}
         {status === "error" ? (
           <p className="mt-4 rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
-            Upload opslaan is niet gelukt. Probeer een kleinere foto of bestand.
+            {statusText || "Upload opslaan is niet gelukt. Probeer een kleinere foto of bestand."}
           </p>
         ) : null}
       </section>
@@ -186,13 +245,18 @@ export default function DocumentManager({
               Upload datum: {new Date(document.createdAt).toLocaleDateString("nl-NL")}
             </p>
             <p className="mt-1 text-sm text-zinc-600">
-              AI-verwerking: {document.kind === "photo" ? "klaar voor latere verwerking" : "placeholder"}
+              AI-verwerking:{" "}
+              {document.kind === "pdf"
+                ? "beschikbaar voor de chat"
+                : document.kind === "photo"
+                  ? "klaar voor latere verwerking"
+                  : "placeholder"}
             </p>
 
-            {document.kind === "photo" ? (
+            {document.kind === "photo" || document.kind === "pdf" ? (
               <button
                 type="button"
-                onClick={() => deleteDocument(document.id)}
+                onClick={() => deleteDocument(document)}
                 className="interactive-lift mt-4 w-full rounded-2xl border border-red-200 px-3 py-3 text-sm font-bold text-red-700 sm:w-auto"
               >
                 Verwijderen
