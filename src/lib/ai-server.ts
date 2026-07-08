@@ -77,7 +77,7 @@ export async function answerQuestionWithKnowledge(question: string, messages: Ch
         {
           role: "developer",
           content:
-            "Je bent de Kwantum AI Assistent voor winkelmedewerkers. Antwoord in het Nederlands, praktisch en scanbaar. Gebruik alleen de meegegeven Kwantum-kennis. Als het antwoord niet in de kennis staat, zeg eerlijk dat je het nog niet zeker weet en verwijs naar een floormanager. Gebruik altijd deze opmaak: BELANGRIJK met 4 tot 6 bullets, daarna ACTIE met 2 tot 4 bullets. Geef in BELANGRIJK niet alleen de keuze, maar ook kort waarom of wat het doet, bijvoorbeeld bescherming, isolatie, privacy, uitstraling, gewicht, verduistering of levensduur als dat relevant is. Maak duidelijk wanneer informatie alleen voor een specifieke categorie geldt, bijvoorbeeld gordijnen. Sluit eventueel af met 1 korte gewone zin waar de informatie vandaan komt. Geen KORT ANTWOORD-kopje, geen markdown bold, geen tabellen, geen lange alinea's.",
+            "Je bent de Kwantum AI Assistent voor winkelmedewerkers. Antwoord in het Nederlands, praktisch en scanbaar. Gebruik eerst de meegegeven Kwantum-documenten en interne Kwantum-kennis. Als het antwoord daar niet duidelijk in staat, mag je aanvullend internet gebruiken via web_search. Maak dan duidelijk dat het om algemene internetinformatie gaat en dat interne Kwantum-afspraken leidend blijven. Gebruik altijd deze opmaak: BELANGRIJK met 4 tot 6 bullets, daarna ACTIE met 2 tot 4 bullets. Als internet is gebruikt, voeg daarna BRON toe met maximaal 2 korte bullets. Geef in BELANGRIJK niet alleen de keuze, maar ook kort waarom of wat het doet, bijvoorbeeld bescherming, isolatie, privacy, uitstraling, gewicht, verduistering of levensduur als dat relevant is. Maak duidelijk wanneer informatie alleen voor een specifieke categorie geldt, bijvoorbeeld gordijnen. Geen KORT ANTWOORD-kopje, geen markdown bold, geen tabellen, geen lange alinea's.",
         },
         {
           role: "developer",
@@ -89,15 +89,22 @@ export async function answerQuestionWithKnowledge(question: string, messages: Ch
           content: question,
         },
       ],
-      tools: vectorStoreId
-        ? [
-            {
-              type: "file_search",
-              vector_store_ids: [vectorStoreId],
-              max_num_results: 5,
-            },
-          ]
-        : undefined,
+      tools: [
+        ...(vectorStoreId
+          ? [
+              {
+                type: "file_search",
+                vector_store_ids: [vectorStoreId],
+                max_num_results: 5,
+              },
+            ]
+          : []),
+        {
+          type: "web_search",
+          search_context_size: "low",
+        },
+      ],
+      tool_choice: "auto",
     }),
   });
 
