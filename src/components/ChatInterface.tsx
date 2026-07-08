@@ -10,7 +10,7 @@ type Message = {
   content: string;
 };
 
-const sectionTitles = new Set(["KORT ANTWOORD", "BELANGRIJK", "ACTIE", "LET OP"]);
+const sectionTitles = new Set(["BELANGRIJK", "ACTIE", "LET OP"]);
 
 function cleanLine(line: string) {
   return line.replace(/\*\*/g, "").trim();
