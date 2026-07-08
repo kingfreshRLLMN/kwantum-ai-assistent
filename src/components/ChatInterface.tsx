@@ -10,6 +10,52 @@ type Message = {
   content: string;
 };
 
+const sectionTitles = new Set(["KORT ANTWOORD", "BELANGRIJK", "ACTIE", "LET OP"]);
+
+function cleanLine(line: string) {
+  return line.replace(/\*\*/g, "").trim();
+}
+
+function ChatMessageContent({ content, role }: { content: string; role: Message["role"] }) {
+  const lines = content
+    .split("\n")
+    .map(cleanLine)
+    .filter(Boolean);
+
+  if (role === "user" || lines.length <= 1) {
+    return <p>{cleanLine(content)}</p>;
+  }
+
+  return (
+    <div className="space-y-2">
+      {lines.map((line, index) => {
+        const normalizedTitle = line.replace(/:$/, "").toUpperCase();
+        const isTitle = sectionTitles.has(normalizedTitle);
+        const isBullet = /^[-•]\s+/.test(line);
+
+        if (isTitle) {
+          return (
+            <p key={`${line}-${index}`} className="text-xs font-black uppercase tracking-wide text-orange-700">
+              {normalizedTitle}
+            </p>
+          );
+        }
+
+        if (isBullet) {
+          return (
+            <div key={`${line}-${index}`} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
+              <p>{line.replace(/^[-•]\s+/, "")}</p>
+            </div>
+          );
+        }
+
+        return <p key={`${line}-${index}`}>{line}</p>;
+      })}
+    </div>
+  );
+}
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -92,7 +138,7 @@ export default function ChatInterface() {
                 : "mr-auto border border-orange-100 bg-white text-zinc-800"
             }`}
           >
-            {message.content}
+            <ChatMessageContent content={message.content} role={message.role} />
           </div>
         ))}
         {isLoading ? (
